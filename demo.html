@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dev</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 24px;
+    min-height: 100vh;
+    background: #0f1115;
+    color: #8a8f9d;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 380px;
+    background: #16181f;
+    border: 1px solid #262932;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* 1200x675 원본 비율 사진을 안 찌그러뜨리고 큼직하게 띄우는 프레임 */
+  .neko-box {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #20232d;
+    border: 1px solid #2a2e3b;
+  }
+
+  .neko-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px 0;
+    background: #eef0f5;
+    color: #0f1115;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background 0.15s ease;
+  }
+
+  .btn:hover {
+    background: #ffffff;
+  }
+
+  .label {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #525765;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="neko-box">
+    <img src="cute.jpg" alt="데모네코" onerror="this.src='https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80'">
+  </div>
+
+  <!-- '야루네코' 구글 검색 결과 연결 -->
+  <a href="https://www.google.com/search?sca_esv=f490e9746bfcf51c&sxsrf=APpeQnsoQgmztiq4SGGGLs-D2l7JzYThwQ:1790319634768&udm=2&fbs=ABfTbFUgt-aXEFkBhPo84x72c1XoLHFs6TcISYM3FayWAWWA7x3ZDrzG9CGSPZ4zI2S4lLjahG8WC85AFbgHa_h6Y7Pns5L0Je8-rxCe2EjJJS_CdtBhaAFfvb2qvGvpnJS2-Gc0C38RnCjgIQ5M2UW94VY6hluLtQnCQYPss9u18otk78XrnjGd4baukmlQSt4FkH-duDA2h2rP8MPkrpmva-xYBU1xBwUPZbD9R_XeDaLaLRl_f4k&q=%EC%95%BC%EB%A3%A8%EB%84%A4%EC%BD%94&sa=X&ved=2ahUKEwi1k_WulImXAxVmulYBHTXUMSsQtKgLegQIGRAB&cshid=1790319646177&biw=1536&bih=776&dpr=1.25&safe=active&ssui=on" target="_blank" class="btn">
+    야루네코 보러가기 ↗
+  </a>
+
+  <div class="label">test page</div>
+</div>
+
+</body>
+</html>

@@ -2,1217 +2,145 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>나폴리탄의 기억 - 불가사의 체험담 모음</title>
-<style>
-/* ===== 기본 리셋 & 2000년대 기반 ===== */
-* { margin:0; padding:0; box-sizing:border-box; }
-
-body {
-  background-color: #c0c0c0;
-  font-family: 'MS Gothic', 'ＭＳ ゴシック', 'Meiryo', monospace;
-  font-size: 13px;
-  color: #000;
-  min-height: 100vh;
-}
-
-/* 팝업 스타일 알림창 */
-#popup-overlay {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-}
-#popup-overlay.show { display: flex; }
-.popup-window {
-  background: #d4d0c8;
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
-  width: 340px;
-  font-family: 'MS Gothic', monospace;
-  font-size: 12px;
-}
-.popup-titlebar {
-  background: linear-gradient(to right, #000080, #1084d0);
-  color: #fff;
-  padding: 3px 6px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 12px;
-  font-weight: bold;
-}
-.popup-close {
-  background: #d4d0c8;
-  border: 1px solid;
-  border-color: #fff #808080 #808080 #fff;
-  width: 16px; height: 14px;
-  font-size: 10px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  line-height: 1;
-}
-.popup-body { padding: 16px; text-align: center; line-height: 2; }
-.popup-btn {
-  background: #d4d0c8;
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
-  padding: 3px 20px;
-  font-family: inherit;
-  font-size: 12px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-.popup-btn:active { border-color: #808080 #fff #fff #808080; }
-
-/* ===== 메인 래퍼 ===== */
-#win {
-  background: #fff;
-  max-width: 700px;
-  margin: 0 auto;
-  border-left: 1px solid #aaa;
-  border-right: 1px solid #aaa;
-  min-height: 100vh;
-}
-#browser-body { background: #fff; }
-
-/* 마퀴 배너 */
-#banner {
-  background: #000080;
-  color: #ffff00;
-  padding: 2px 0;
-  font-size: 11px;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.marquee-text {
-  display: inline-block;
-  animation: marquee 20s linear infinite;
-  padding-left: 100%;
-}
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
-}
-
-/* 페이지 헤더 */
-#page-header {
-  background: #fff;
-  padding: 12px 14px 8px;
-  border-bottom: 3px double #ccc;
-}
-#site-name {
-  font-size: 22px;
-  font-weight: bold;
-  color: #000080;
-  letter-spacing: 3px;
-  margin-bottom: 2px;
-  text-shadow: 1px 1px 0 #aaa;
-}
-#site-desc {
-  font-size: 11px;
-  color: #555;
-  letter-spacing: 1px;
-}
-.blink { animation: blink 1s step-end infinite; }
-@keyframes blink { 50% { opacity: 0; } }
-
-/* 상단 네비 */
-#topnav {
-  background: #ddd;
-  border-bottom: 2px solid #aaa;
-  border-top: 1px solid #eee;
-  display: flex;
-  padding: 0;
-}
-.nav-btn {
-  padding: 4px 14px;
-  font-size: 12px;
-  font-family: inherit;
-  background: #e8e8e8;
-  border: none;
-  border-right: 1px solid #aaa;
-  cursor: pointer;
-  color: #000;
-}
-.nav-btn:hover { background: #000080; color: #fff; }
-.nav-btn.active {
-  background: #fff;
-  font-weight: bold;
-  border-bottom: 2px solid #fff;
-}
-.nav-btn .new-mark {
-  color: #f00;
-  font-size: 9px;
-  font-weight: bold;
-  margin-left: 3px;
-  animation: blink 0.8s step-end infinite;
-}
-
-/* 레이아웃 */
-#layout {
-  display: flex;
-  align-items: flex-start;
-}
-
-/* 사이드바 */
-#sidebar {
-  width: 160px;
-  flex-shrink: 0;
-  background: #f4f4f4;
-  border-right: 1px solid #ccc;
-  padding: 8px 6px;
-  min-height: 600px;
-}
-.sb-section {
-  border: 1px solid #bbb;
-  background: #f8f8f8;
-  margin-bottom: 10px;
-}
-.sb-head {
-  background: #000080;
-  color: #fff;
-  padding: 2px 6px;
-  font-size: 11px;
-  font-weight: bold;
-}
-.sb-content {
-  padding: 4px 6px;
-  font-size: 11px;
-  line-height: 2;
-}
-.sb-content a, .sb-link {
-  display: block;
-  color: #000080;
-  text-decoration: underline;
-  cursor: pointer;
-  font-size: 11px;
-  line-height: 1.9;
-}
-.sb-content a:hover, .sb-link:hover { color: #f00; background: #ffffcc; }
-.sb-content a.active-link { color: #f00; font-weight: bold; }
-
-.counter-display {
-  font-family: 'Courier New', monospace;
-  font-size: 17px;
-  background: #111;
-  color: #00ff00;
-  padding: 2px 4px;
-  letter-spacing: 3px;
-  display: block;
-  text-align: center;
-  margin: 4px 0;
-  border: 1px inset #333;
-}
-
-/* 메인 영역 */
-#main {
-  flex: 1;
-  min-width: 0;
-  padding: 10px 12px;
-  background: #fff;
-}
-
-/* 페이지들 */
-.page { display: none; }
-.page.active { display: block; }
-
-/* 섹션 헤더 */
-.sec-head {
-  background: #000080;
-  color: #fff;
-  padding: 3px 8px;
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 8px;
-  letter-spacing: 1px;
-}
-.sec-head2 {
-  background: #808080;
-  color: #fff;
-  padding: 2px 8px;
-  font-size: 11px;
-  margin: 12px 0 6px;
-}
-
-/* TOP 페이지 */
-.update-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 11px;
-  margin-bottom: 12px;
-}
-.update-table tr { border-bottom: 1px dotted #ccc; }
-.update-table td { padding: 3px 6px; }
-.update-table .dt { color: #000080; font-weight: bold; white-space: nowrap; width: 90px; }
-.new-badge {
-  background: #f00;
-  color: #fff;
-  font-size: 9px;
-  padding: 0 3px;
-  font-weight: bold;
-  margin-left: 4px;
-  vertical-align: middle;
-}
-
-.intro-box {
-  border: 1px solid #ccc;
-  background: #fffff8;
-  padding: 8px 10px;
-  font-size: 12px;
-  line-height: 2;
-  color: #222;
-  margin-bottom: 12px;
-}
-
-/* 괴담 목록 */
-.story-list-item {
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
-  background: #f8f8f8;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: none;
-}
-.story-list-item:hover { background: #ffffcc; }
-.story-list-item .sl-head {
-  background: #c0c0c0;
-  border-bottom: 1px solid #808080;
-  padding: 3px 8px;
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-}
-.sl-no { color: #555; }
-.sl-date { color: #555; }
-.story-list-item .sl-title {
-  padding: 5px 10px 3px;
-  font-weight: bold;
-  font-size: 13px;
-  color: #000080;
-}
-.story-list-item:hover .sl-title { color: #f00; text-decoration: underline; }
-.story-list-item .sl-preview {
-  padding: 0 10px 6px;
-  font-size: 11px;
-  color: #555;
-  line-height: 1.7;
-}
-.story-list-item .sl-tags {
-  padding: 0 10px 5px;
-  font-size: 10px;
-  color: #888;
-}
-
-/* 괴담 본문 */
-.story-body-wrap {
-  border: 1px solid #ccc;
-  background: #fffff8;
-  padding: 12px 14px;
-  font-size: 13px;
-  line-height: 2.4;
-  color: #111;
-  margin-bottom: 14px;
-}
-.story-body-wrap p {
-  margin-bottom: 10px;
-  text-indent: 1em;
-}
-.story-body-wrap p.no-indent { text-indent: 0; }
-.story-body-wrap .dialog {
-  text-indent: 0;
-  margin-left: 1em;
-}
-.story-body-wrap .footnote {
-  font-size: 11px;
-  color: #888;
-  border-top: 1px dotted #ccc;
-  padding-top: 6px;
-  margin-top: 10px;
-  text-indent: 0;
-}
-
-/* 댓글 */
-.comment-form-box {
-  border: 1px solid #ccc;
-  background: #f8f8f8;
-  padding: 8px 10px;
-  margin-bottom: 12px;
-}
-.comment-form-box input[type=text],
-.comment-form-box textarea {
-  width: 100%;
-  border: 2px solid;
-  border-color: #808080 #fff #fff #808080;
-  background: #fff;
-  font-family: inherit;
-  font-size: 12px;
-  padding: 3px 4px;
-  margin-bottom: 5px;
-  resize: vertical;
-}
-.comment-form-box textarea { height: 60px; }
-.form-row { display: flex; gap: 6px; align-items: center; margin-bottom: 5px; }
-.form-row label { font-size: 11px; white-space: nowrap; width: 50px; }
-.form-row input { flex: 1; }
-.win-btn {
-  background: #d4d0c8;
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
-  padding: 3px 14px;
-  font-family: inherit;
-  font-size: 12px;
-  cursor: pointer;
-}
-.win-btn:active { border-color: #808080 #fff #fff #808080; }
-.win-btn:hover { background: #c0c0c0; }
-
-.comment-item {
-  border-bottom: 1px dotted #bbb;
-  padding: 7px 0;
-  font-size: 12px;
-  line-height: 1.9;
-}
-.comment-item:last-child { border-bottom: none; }
-.c-meta { font-size: 10px; color: #666; margin-bottom: 2px; }
-.c-name { font-weight: bold; color: #000080; margin-right: 8px; }
-.c-date { color: #999; }
-.c-body { color: #222; }
-.c-admin { color: #880000; font-weight: bold; }
-
-/* 방명록 */
-.gb-entry {
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
-  background: #fffff8;
-  padding: 8px 10px;
-  margin-bottom: 8px;
-  font-size: 12px;
-  line-height: 1.9;
-}
-.gb-meta { font-size: 10px; color: #777; margin-bottom: 3px; }
-.gb-name-label { font-weight: bold; color: #000080; }
-.gb-reply {
-  margin-top: 6px;
-  padding: 5px 8px;
-  background: #f0f0f0;
-  border-left: 3px solid #000080;
-  font-size: 11px;
-  color: #333;
-}
-.gb-reply .reply-label { color: #880000; font-weight: bold; font-size: 10px; }
-
-/* 프로필 */
-.profile-table {
-  border-collapse: collapse;
-  font-size: 12px;
-  margin-bottom: 12px;
-}
-.profile-table td {
-  padding: 5px 10px;
-  border-bottom: 1px dotted #ccc;
-  vertical-align: top;
-}
-.profile-table td:first-child {
-  color: #000080;
-  font-weight: bold;
-  white-space: nowrap;
-  width: 80px;
-  background: #f0f0f0;
-}
-
-/* 링크 */
-.link-item {
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
-  background: #f8f8f8;
-  padding: 6px 10px;
-  margin-bottom: 6px;
-  font-size: 12px;
-}
-.link-item .link-name { font-weight: bold; color: #000080; text-decoration: underline; cursor: pointer; }
-.link-item .link-name:hover { color: #f00; }
-.link-item .link-desc { font-size: 11px; color: #555; margin-top: 2px; }
-.link-item .link-url { font-size: 10px; color: #888; margin-top: 1px; }
-
-/* 스테이터스바 */
-#statusbar {
-  background: #d4d0c8;
-  border-top: 2px solid;
-  border-color: #808080 #fff #fff #808080;
-  padding: 2px 6px;
-  font-size: 10px;
-  color: #333;
-  display: flex;
-  justify-content: space-between;
-}
-
-/* 뒤로가기 버튼 */
-.back-btn {
-  background: #d4d0c8;
-  border: 2px solid;
-  border-color: #fff #808080 #808080 #fff;
-  padding: 2px 10px;
-  font-family: inherit;
-  font-size: 11px;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-.back-btn:active { border-color: #808080 #fff #fff #808080; }
-.back-btn:hover { background: #c0c0c0; }
-
-/* 이미지 깨진 박스 */
-.broken-img {
-  display: inline-block;
-  border: 1px solid #ccc;
-  background: #f0f0f0;
-  width: 88px; height: 31px;
-  font-size: 8px; color: #999;
-  text-align: center; line-height: 31px;
-  vertical-align: middle;
-  margin: 2px;
-}
-
-hr.fancy {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin: 10px 0;
-}
-hr.double {
-  border: none;
-  border-top: 3px double #aaa;
-  margin: 12px 0;
-}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>apidwhbg — 개발 및 피드백 테스트 사이트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+KR:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- 팝업 (방문시 안내) -->
-<div id="popup-overlay" class="show">
-  <div class="popup-window">
-    <div class="popup-titlebar">
-      <span>나폴리탄의 기억</span>
-      <span class="popup-close" onclick="closePopup()">✕</span>
-    </div>
-    <div class="popup-body">
-      <p>이 페이지에는 <strong>불가사의한 체험담</strong>이<br>수록되어 있습니다.</p>
-      <br>
-      <p style="font-size:11px; color:#555;">심야에 혼자 열람하는 것은<br>삼가 주십시오.</p>
-      <br>
-      <button class="popup-btn" onclick="closePopup()">　확인　</button>
-    </div>
+<div class="demo-banner">
+  ⚠️ 본 사이트는 실제 기기 매입·판매를 진행하지 않는 <strong>가상의 디자인 피드백 및 개발 테스트용 페이지</strong>입니다.
+</div>
+
+<!-- 시네마틱 인트로 -->
+<div class="intro" id="introOverlay">
+  <div class="intro-glow"></div>
+  <div class="intro-content">
+    <span class="intro-sub">APIDWHBG DIRECT SOURCING</span>
+    <h1 class="intro-title">어디서 어떻게 쓰였는지,<br><strong>명확히 고지하는 기준</strong></h1>
   </div>
 </div>
 
-<!-- 브라우저 윈도우 -->
-<div id="win">
-  <div id="titlebar">
-    <span>나폴리탄의 기억 - Microsoft Internet Explorer</span>
-    <div class="win-btns">
-      <span>_</span><span>□</span><span>✕</span>
+<div class="ambient" aria-hidden="true"><span></span><span></span></div>
+
+<header class="nav">
+  <a class="wordmark" href="#">apidwhbg <span>[DEV]</span></a>
+  <a class="nav-link demo-btn" href="#">판매 상품 보기 <span>↗</span></a>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow"><span></span> DEV & FEEDBACK PREVIEW</div>
+      <h1 class="hero-title">
+        싸게 가져오는 것보다<br>
+        <strong>어디서 가져왔는지</strong>가<br>
+        더 중요하다고 생각합니다.
+      </h1>
+      <p class="hero-lead">
+        중국발 대량 리퍼 물량을 떼어와 판매하는 방식이 아닙니다.
+        국내에서 실제 사용되던 매물을 직접 찾아 한 대씩 매입하고,
+        수리·교체 여부까지 확인한 뒤 판매합니다.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary demo-btn" href="#">매장 보기 (DEMO) <span>↗</span></a>
+        <a class="button secondary" href="#standard">판매 기준 보기</a>
+      </div>
+      <div class="hero-note">※ 본 페이지의 모든 내용은 개발 테스트용 샘플 문구입니다.</div>
     </div>
+
+    <!-- 💥 이미지 박스 깔끔하게 제거함 💥 -->
+    <div class="hero-side" aria-label="판매 원칙">
+      <div class="side-label">OUR STANDARD</div>
+      <div class="side-stat">
+        <b>01</b>
+        <strong>국내 실사용 매물</strong>
+        <p>대량 리퍼 물량이 아니라 국내에서 실제 사용된 기기를 개별 매입합니다.</p>
+      </div>
+      <div class="side-stat">
+        <b>02</b>
+        <strong>개별 검수</strong>
+        <p>배터리, 디스플레이, 카메라, 생체인식 등 주요 기능을 직접 확인합니다.</p>
+      </div>
+      <div class="side-stat">
+        <b>03</b>
+        <strong>수리·교체 이력 공개</strong>
+        <p>수리나 부품 교체가 있었다면 숨기지 않고 상품 설명에 기재합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contrast">
+    <div class="section-kicker reveal">WHY DIFFERENT</div>
+    <h2 class="reveal">중고폰은 <em>외관만</em> 보고 사는 물건이 아니니까.</h2>
+    <div class="contrast-grid">
+      <article class="contrast-card muted reveal">
+        <span class="card-tag">일반적인 대량 유통 방식</span>
+        <h3>출처보다 단가를 먼저</h3>
+        <p>대량으로 확보한 리퍼·중고 물량은 개별 기기의 사용 이력이나 부품 교체 상태를 구매자가 알기 어려울 수 있습니다.</p>
+      </article>
+      <article class="contrast-card featured reveal">
+        <span class="card-tag">apidwhbg의 방식</span>
+        <h3>한 대씩 보고, 확인하고, 적습니다.</h3>
+        <p>국내 매물을 직접 찾아 매입하고, 검수 후 판매합니다. 수리·교체가 있었다면 그 사실까지 상품 정보에 남깁니다.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="standard" id="standard">
+    <div class="section-head">
+      <div class="section-kicker">INSPECTION</div>
+      <h2>검수는 보여주기 위한 절차가 아닙니다.</h2>
+      <p>판매하기 위해 좋은 점만 골라 말하지 않습니다. 확인한 내용을 있는 그대로 전달합니다.</p>
+    </div>
+
+    <div class="inspection-grid">
+      <div class="inspection reveal"><span>01</span><strong>배터리</strong><p>배터리 성능 상태를 확인하고 상품에 안내합니다.</p></div>
+      <div class="inspection reveal"><span>02</span><strong>디스플레이</strong><p>화면 상태와 터치 이상 여부를 확인합니다.</p></div>
+      <div class="inspection reveal"><span>03</span><strong>카메라</strong><p>전·후면 카메라 및 주요 촬영 기능을 확인합니다.</p></div>
+      <div class="inspection reveal"><span>04</span><strong>생체인식</strong><p>Touch ID 또는 Face ID 등 해당 기능을 확인합니다.</p></div>
+      <div class="inspection reveal"><span>05</span><strong>기능 테스트</strong><p>통화·충전·버튼 등 주요 사용 기능을 점검합니다.</p></div>
+      <div class="inspection reveal"><span>06</span><strong>이력 표기</strong><p>확인된 수리·교체 사항은 숨기지 않고 기재합니다.</p></div>
+    </div>
+  </section>
+
+  <section class="sourcing">
+    <div class="sourcing-copy reveal">
+      <div class="section-kicker">SOURCING</div>
+      <h2>우리는<br><strong>물량</strong>보다<br><strong>한 대의 상태</strong>를 봅니다.</h2>
+    </div>
+    <div class="sourcing-copy right reveal">
+      <p>중국에서 대량으로 들여온 리퍼브 물량을 단순 재판매하는 방식이 아니라, 국내 중고 시장의 개별 매물을 직접 찾아 매입합니다.</p>
+      <p>그래서 모든 기기의 상태가 똑같을 수는 없습니다. 대신 <strong>기기마다 다른 상태를 숨기지 않는 것</strong>을 원칙으로 합니다.</p>
+      <div class="warning">
+        <b>배터리와 부품은 특히 확인하세요.</b>
+        <span>출처가 불분명한 기기나 교체 부품은 품질·인증 여부를 확인하기 어렵습니다. 구매 전 배터리와 부품 상태, 수리 이력을 반드시 확인하는 것을 권합니다.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="promise">
+    <div class="promise-inner reveal">
+      <div class="section-kicker">ONE SIMPLE PROMISE</div>
+      <h2>좋은 척하지 않겠습니다.<br><strong>확인한 그대로 말씀드리겠습니다.</strong></h2>
+      <p>중고 아이폰을 사는 사람이 가장 궁금한 건 결국 하나라고 생각합니다.<br>“이 폰, 실제로 어떤 상태인가?”</p>
+      <a class="button primary demo-btn" href="#">상품 보기 (DEMO) <span>↗</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div>
+    <strong>apidwhbg [TEST SITE]</strong>
+    <p>※ 본 웹사이트는 실제 상품 매입·판매·거래를 하지 않는 <strong>가상의 디자인 / 피드백 개발 사이트</strong>입니다.</p>
   </div>
+  <span>DEV / FEEDBACK PREVIEW</span>
+</footer>
 
-  <div id="menubar">
-    <span>파일(F)</span>
-    <span>편집(E)</span>
-    <span>보기(V)</span>
-    <span>즐겨찾기(A)</span>
-    <span>도구(T)</span>
-    <span>도움말(H)</span>
-  </div>
-
-  <div id="addrbar">
-    <span class="label">주소(D)</span>
-    <input id="addrbox" type="text" value="http://www.geocities.co.jp/Heartland-Cosmos/7734/" readonly>
-    <button class="win-btn" style="padding:1px 10px; font-size:11px;">이동</button>
-  </div>
-
-  <div id="browser-body">
-
-    <!-- 마퀴 배너 -->
-    <div id="banner">
-      <span class="marquee-text">
-        ★ 링크는 자유입니다 환영합니다 ★ 투고도 기다리고 있어요 ★ 최종 업데이트 2003.10.02 ★ 총 방문자 수 8,432명 감사합니다！ ★ 이상한 체험담 있으면 게시판에 써주세요 ★
-      </span>
-    </div>
-
-    <!-- 페이지 헤더 -->
-    <div id="page-header">
-      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-        <div>
-          <div id="site-name">나폴리탄의 기억</div>
-          <div id="site-desc">불가사의한 체험담・도시전설 수집 페이지 / 관리인：みつる</div>
-        </div>
-        <div style="text-align:right; font-size:10px; color:#888; line-height:1.8;">
-          <span class="broken-img">[배너]</span><br>
-          Since 2002.08.14
-        </div>
-      </div>
-    </div>
-
-    <!-- 탭 네비 -->
-    <div id="topnav">
-      <button class="nav-btn active" onclick="showPage('top', this)">TOP</button>
-      <button class="nav-btn" onclick="showPage('stories', this)">괴담 목록</button>
-      <button class="nav-btn" onclick="showPage('bbs', this)">게시판<span class="new-mark">NEW</span></button>
-      <button class="nav-btn" onclick="showPage('guestbook', this)">방명록</button>
-      <button class="nav-btn" onclick="showPage('profile', this)">프로필</button>
-      <button class="nav-btn" onclick="showPage('links', this)">링크</button>
-    </div>
-
-    <div id="layout">
-      <!-- 사이드바 -->
-      <div id="sidebar">
-        <div class="sb-section">
-          <div class="sb-head">■ 카테고리</div>
-          <div class="sb-content">
-            <span class="sb-link" onclick="showStoryList('all')">전체 (6)</span>
-            <span class="sb-link" onclick="showStoryList('napolitan')">나폴리탄 (3)</span>
-            <span class="sb-link" onclick="showStoryList('school')">학교 괴담 (1)</span>
-            <span class="sb-link" onclick="showStoryList('urban')">도시전설 (1)</span>
-            <span class="sb-link" onclick="showStoryList('experience')">체험담 (1)</span>
-          </div>
-        </div>
-
-        <div class="sb-section">
-          <div class="sb-head">■ 방문자 수</div>
-          <div class="sb-content" style="text-align:center; padding:8px 4px;">
-            <span class="counter-display" id="counter">008432</span>
-            <div style="font-size:10px; color:#444; margin-top:2px;">감사합니다！</div>
-          </div>
-        </div>
-
-        <div class="sb-section">
-          <div class="sb-head">■ 인기 페이지</div>
-          <div class="sb-content">
-            <span class="sb-link" onclick="openStory(0)">나폴리탄 (1,847)</span>
-            <span class="sb-link" onclick="openStory(3)">폐교의 미술실 (934)</span>
-            <span class="sb-link" onclick="openStory(1)">나폴리탄2 (721)</span>
-            <span class="sb-link" onclick="openStory(4)">빨간 방 (601)</span>
-          </div>
-        </div>
-
-        <div class="sb-section">
-          <div class="sb-head">■ 프로필</div>
-          <div class="sb-content" style="font-size:10px; line-height:1.9;">
-            이름: みつる<br>
-            거주: 사이타마<br>
-            취미: 괴담 수집<br>
-            <br>
-            이상한 이야기를<br>
-            모으고 있습니다。<br>
-            제보 환영합니다。
-          </div>
-        </div>
-
-        <div style="text-align:center; font-size:10px; color:#666; margin-top:6px; line-height:1.9;">
-          <span class="broken-img">[88x31]</span><br>
-          <span class="broken-img">[88x31]</span><br>
-          <span style="font-size:9px;">배너교환 환영</span>
-        </div>
-      </div>
-
-      <!-- 메인 영역 -->
-      <div id="main">
-
-        <!-- TOP 페이지 -->
-        <div class="page active" id="page-top">
-          <div class="sec-head">■ 이 사이트에 대해서</div>
-          <div class="intro-box">
-            방문해 주셔서 감사합니다。<br>
-            여기는 제가 수집한 불가사의한 이야기・체험담을 올려두는 개인 페이지입니다。<br>
-            주로 친구나 인터넷에서 수집한 이야기를 정리하고 있어요。<br>
-            투고・링크 모두 자유입니다。 수상한 이야기가 있으면 게시판에 써주세요。
-            <br><br>
-            <span class="blink" style="color:#f00;">★</span> 심야에 혼자 읽는 것은 삼가 주십시오。
-          </div>
-
-          <div class="sec-head">■ 업데이트 정보</div>
-          <table class="update-table">
-            <tr><td class="dt">2003.10.02</td><td>나폴리탄 3화 추가했습니다 <span class="new-badge">NEW</span></td></tr>
-            <tr><td class="dt">2003.09.17</td><td>게시판 리뉴얼、댓글 기능 추가</td></tr>
-            <tr><td class="dt">2003.08.30</td><td>나폴리탄 2화、폐교 이야기 추가</td></tr>
-            <tr><td class="dt">2003.07.14</td><td>빨간 방、체험담 2편 추가</td></tr>
-            <tr><td class="dt">2003.06.02</td><td>카테고리 정리했습니다</td></tr>
-            <tr><td class="dt">2003.04.18</td><td>사이트 개설 1주년！ 감사합니다</td></tr>
-          </table>
-
-          <div class="sec-head">■ 최신 괴담</div>
-          <div class="story-list-item" onclick="openStory(2)">
-            <div class="sl-head"><span class="sl-no">No.006</span><span class="sl-date">2003.10.02 <span class="new-badge">NEW</span></span></div>
-            <div class="sl-title">나폴리탄 ～마지막 이야기～</div>
-            <div class="sl-preview">그 가게에 다시 가봤다. 하지만 가게는 이미 없었고 빈 땅이 되어 있었다. 근처 주민에게 물어보니……</div>
-            <div class="sl-tags">카테고리: 나폴리탄 / 조회: 203</div>
-          </div>
-          <div class="story-list-item" onclick="openStory(0)">
-            <div class="sl-head"><span class="sl-no">No.001</span><span class="sl-date">2003.04.22</span></div>
-            <div class="sl-title">나폴리탄</div>
-            <div class="sl-preview">혼자 여행하다 길을 잃어 낡은 양식집에 들어갔는데, 메뉴는 나폴리탄 하나뿐이었다……</div>
-            <div class="sl-tags">카테고리: 나폴리탄 / 조회: 1,847</div>
-          </div>
-
-          <hr class="fancy">
-          <div style="text-align:center; font-size:11px; color:#555; margin-top:8px;">
-            <span class="broken-img">[GIF]</span>
-            <span class="broken-img">[GIF]</span>
-            <span class="broken-img">[GIF]</span>
-          </div>
-        </div>
-
-        <!-- 괴담 목록 -->
-        <div class="page" id="page-stories">
-          <div class="sec-head" id="story-list-head">■ 괴담 목록 - 전체</div>
-          <div id="story-list-view"></div>
-
-          <!-- 괴담 본문 뷰 -->
-          <div id="story-detail-view" style="display:none;">
-            <button class="back-btn" onclick="backToList()">◀ 목록으로 돌아가기</button>
-            <div id="story-detail-content"></div>
-          </div>
-        </div>
-
-        <!-- 게시판 -->
-        <div class="page" id="page-bbs">
-          <div class="sec-head">■ 자유 게시판</div>
-          <div class="intro-box" style="margin-bottom:10px; font-size:11px;">
-            이상한 체험담、들은 괴담、뭐든지 자유롭게 써주세요。<br>
-            개인정보（이름、주소 등）는 절대 쓰지 마세요。
-          </div>
-
-          <div class="comment-form-box">
-            <div class="sec-head2" style="margin-top:0;">글 쓰기</div>
-            <div class="form-row"><label>이름</label><input type="text" id="bbs-name" placeholder="닉네임 (익명 가능)" maxlength="20"></div>
-            <div class="form-row" style="align-items:flex-start;"><label style="padding-top:3px;">내용</label><textarea id="bbs-body" placeholder="여기에 써주세요…" style="width:100%; flex:1;"></textarea></div>
-            <div style="text-align:right;"><button class="win-btn" onclick="postBbs()">　투고　</button></div>
-          </div>
-
-          <div class="sec-head2" style="margin-top:0;">■ 최근 투고</div>
-          <div id="bbs-list"></div>
-        </div>
-
-        <!-- 방명록 -->
-        <div class="page" id="page-guestbook">
-          <div class="sec-head">■ 방명록</div>
-          <div class="intro-box" style="margin-bottom:10px; font-size:11px;">
-            방문 기념으로 한마디 남겨주세요。URL도 환영합니다。
-          </div>
-
-          <div class="comment-form-box">
-            <div class="sec-head2" style="margin-top:0;">방명록 쓰기</div>
-            <div class="form-row"><label>이름</label><input type="text" id="gb-name" placeholder="닉네임" maxlength="20"></div>
-            <div class="form-row"><label>홈페이지</label><input type="text" id="gb-url" placeholder="http://" maxlength="80"></div>
-            <div class="form-row" style="align-items:flex-start;"><label style="padding-top:3px;">메시지</label><textarea id="gb-body" placeholder="메시지를 입력해주세요…" style="width:100%; flex:1;"></textarea></div>
-            <div style="text-align:right;"><button class="win-btn" onclick="postGuestbook()">　보내기　</button></div>
-          </div>
-
-          <div id="gb-list"></div>
-        </div>
-
-        <!-- 프로필 -->
-        <div class="page" id="page-profile">
-          <div class="sec-head">■ 관리인 프로필</div>
-          <table class="profile-table">
-            <tr><td>이름</td><td>みつる（미츠루）</td></tr>
-            <tr><td>거주지</td><td>사이타마현</td></tr>
-            <tr><td>나이</td><td>비공개</td></tr>
-            <tr><td>취미</td><td>괴담 수집、인터넷、야구 관람</td></tr>
-            <tr><td>좋아하는 것</td><td>나폴리탄 (웃음) 、 심야방송</td></tr>
-            <tr><td>사이트 개설</td><td>2002년 8월 14일</td></tr>
-            <tr><td>사용 중인 것</td><td>Geocities Japan / IE6 / Windows XP</td></tr>
-          </table>
-          <div class="intro-box">
-            처음에는 그냥 취미로 시작했는데, 어느새 꽤 많이 모였네요。<br>
-            친구한테서 들은 나폴리탄 이야기가 계기였어요。<br>
-            제보나 링크 신청은 게시판이나 메일로 해주세요。<br>
-            <br>
-            잘 부탁드립니다。
-            <div style="text-align:right; margin-top:6px; font-size:11px; color:#888;">みつる</div>
-          </div>
-        </div>
-
-        <!-- 링크 -->
-        <div class="page" id="page-links">
-          <div class="sec-head">■ 링크 모음</div>
-          <div style="font-size:11px; color:#555; margin-bottom:10px; line-height:1.9;">
-            관련 사이트를 모아두었습니다。링크 신청은 게시판으로 해주세요。<br>
-            상호링크 환영합니다！
-          </div>
-
-          <div class="sec-head2" style="margin-top:0;">◎ 괴담・공포 사이트</div>
-          <div class="link-item">
-            <div class="link-name" onclick="showPopupMsg('외부 링크는 지원되지 않습니다。')">학교 이야기 모음</div>
-            <div class="link-desc">전국 학교 괴담 데이터베이스。분류가 잘 되어 있어서 찾기 쉬워요。</div>
-            <div class="link-url">http://www.geocities.co.jp/school-kaidan/</div>
-          </div>
-          <div class="link-item">
-            <div class="link-name" onclick="showPopupMsg('외부 링크는 지원되지 않습니다。')">도시전설 아카이브</div>
-            <div class="link-desc">일본 도시전설을 철저하게 수집한 사이트。빨간 방 관련 정보도 있어요。</div>
-            <div class="link-url">http://www.infoseek.co.jp/~toshidensetsu/</div>
-          </div>
-          <div class="link-item">
-            <div class="link-name" onclick="showPopupMsg('외부 링크는 지원되지 않습니다。')">심령사진 게시판</div>
-            <div class="link-desc">심령사진 전문 게시판。투고수가 많아서 퀄리티 높은 것도 있어요。</div>
-            <div class="link-url">http://bbs.geocities.jp/shinrei-photo/</div>
-          </div>
-
-          <div class="sec-head2">◎ 친구 사이트</div>
-          <div class="link-item">
-            <div class="link-name" onclick="showPopupMsg('외부 링크는 지원되지 않습니다。')">みゆきのおへや</div>
-            <div class="link-desc">중학교 때 친구 みゆき의 페이지。일상과 좋아하는 음악에 대해서。</div>
-            <div class="link-url">http://www.geocities.co.jp/Milkyway/miyuki_room/</div>
-          </div>
-          <div class="link-item">
-            <div class="link-name" onclick="showPopupMsg('외부 링크는 지원되지 않습니다。')">たろうのゲームページ</div>
-            <div class="link-desc">게임 공략 정보 사이트。RPG 중심으로 자세하게 써져 있어요。</div>
-            <div class="link-url">http://hp.vector.co.jp/authors/taro_game/</div>
-          </div>
-
-          <hr class="fancy">
-          <div style="font-size:11px; color:#555; margin-top:6px;">
-            링크 신청은 <span class="sb-link" style="display:inline;" onclick="showPage('bbs', document.querySelectorAll('.nav-btn')[2])">게시판</span>으로 해주세요。상호링크 환영합니다。<br>
-            배너 사이즈: 88×31 픽셀
-          </div>
-        </div>
-
-      </div><!-- /main -->
-    </div><!-- /layout -->
-
-    <div id="statusbar">
-      <span id="status-text">완료</span>
-      <span>인터넷 영역</span>
-    </div>
-
-  </div><!-- /browser-body -->
-</div><!-- /win -->
-
-<script>
-// ===== 데이터 =====
-const stories = [
-  {
-    id: 0,
-    no: 'No.001',
-    title: '나폴리탄',
-    date: '2003.04.22',
-    category: 'napolitan',
-    views: 1847,
-    preview: '혼자 여행하다 길을 잃어 낡은 양식집에 들어갔는데, 메뉴는 나폴리탄 하나뿐이었다……',
-    body: `
-      <p class="no-indent">이건 내가 직접 겪은 일이야。</p>
-      <p>대학교 때、혼자 배낭여행을 하다가 길을 잃었어。낯선 시골 마을이었는데 날도 저물어가고 배도 고파서 어떻게든 가게를 찾아야 했어。</p>
-      <p>골목을 몇 개 지나다 보니까 작은 양식집이 있었어。간판은 반쯤 떨어져 있어서 뭐라고 쓰여 있는지도 모르겠고、창문은 기름때인지 뿌옇게 되어 있어서 안이 잘 안 보였어。</p>
-      <p>그래도 배가 너무 고파서 들어갔어。</p>
-      <p>안에는 아무도 없었어。손님도、종업원도。그냥 오래된 테이블 몇 개랑 의자만 있었어。조명도 어두컴컴해서 제대로 안 보일 정도였어。</p>
-      <p>「저기요—」하고 불렀더니 안쪽 주방에서 나이 든 아저씨가 나왔어。별로 반가워하는 표정도 아니었고、그냥 「뭐 드실래요」라고 물어봤어。</p>
-      <p>메뉴판을 받았는데 글자가 거의 다 지워져 있었어。그나마 읽을 수 있는 건 딱 하나였어。</p>
-      <p class="dialog">「나폴리탄」</p>
-      <p>어쩔 수 없이 그걸 시켰어。</p>
-      <p>금방 나왔어。평범한 나폴리탄이었어。케첩 소스에 스파게티、위에 소시지랑 피망이 올라있는。</p>
-      <p>먹어봤더니 맛있었어。근데 뭔가 이상하게 맛있었어。케첩 맛인데 어딘가 다른 맛이 섞여있는 것 같은。뭔지는 모르겠는데。</p>
-      <p>다 먹고 나서 계산하려고 카운터에 갔더니 아저씨가 없었어。「저기요—」하고 불러도 대답이 없어。</p>
-      <p>할 수 없이 주방 쪽을 들여다봤어。</p>
-      <p>그때 바닥에 뭔가 빨간 게 번져 있는 걸 봤어。처음엔 케첩이라고 생각했어。근데 이상하게 선명한 색이었어。그리고 따뜻해 보였어。</p>
-      <p>그게 뭔지、지금도 생각하고 싶지 않아。</p>
-      <p>나는 그냥 가게를 뛰쳐나왔어。돈도 안 내고。</p>
-      <p>나중에 그 마을 사람들한테 그 가게 이야기를 했더니 아무도 모른다고 했어。그 골목에 양식집 같은 건 없다고。</p>
-    `,
-    comments: [
-      { name: 'ゆかり', date: '2003.04.23', body: '읽었어요... 왜인지 모르게 무서웠어요。케첩이 아니라는 게 확실한 건가요' },
-      { name: '匿名', date: '2003.04.24', body: '비슷한 이야기를 전에 들은 적이 있어요。지역이 어디예요?' },
-      { name: 'みつる（管理人）', date: '2003.04.24', body: '사이타마 북부쪽이에요。정확한 지명은 기억이 잘...', isAdmin: true },
-      { name: 'たろう', date: '2003.05.01', body: '케첩이랑 색이 비슷하니까 실제로 봤을 때 구분이 어렵겠죠... 무섭다' },
-      { name: 'みゆき', date: '2003.05.03', body: '친구한테도 보여줬는데 무서워하더라고요。나폴리탄 못 먹겠다고 (웃음)' },
-    ]
-  },
-  {
-    id: 1,
-    no: 'No.004',
-    title: '나폴리탄 2화 ～속편～',
-    date: '2003.08.30',
-    category: 'napolitan',
-    views: 721,
-    preview: '친구가 같은 마을에서 비슷한 경험을 했다고 연락이 왔다。',
-    body: `
-      <p class="no-indent">1화를 올린 지 얼마 안 됐을 때、친구한테서 메일이 왔어。</p>
-      <p>「나 그 마을 알아。거기 작년에 갔었어。」</p>
-      <p>깜짝 놀라서 바로 전화했어。</p>
-      <p>친구 말로는、같은 마을에서 비슷한 경험을 했다고 했어。역시 낡은 양식집、역시 메뉴는 하나뿐、역시 나폴리탄이었대。</p>
-      <p>근데 친구가 경험한 건 조금 달랐어。</p>
-      <p>친구는 먹다가 중간에 이상한 걸 발견했대。면 사이에 뭔가 섞여 있었대。처음엔 소시지 조각인 줄 알았는데、잘 보니까 형태가 이상했대。</p>
-      <p>손톱이었대。</p>
-      <p>그 얘기를 듣고 나서 나도 밥을 제대로 못 먹었어。</p>
-      <p>친구는 그때 주인 아저씨한테 화를 낼까 하다가、뭔지 모를 느낌이 들어서 그냥 조용히 나왔대。</p>
-      <p>「그 아저씨 눈이 좀 이상했어。」</p>
-      <p>친구는 그렇게 말했어。어떻게 이상했냐고 물었더니、</p>
-      <p class="dialog">「웃고 있었어。내내。나를 계속 보면서。」</p>
-      <p>전화를 끊고 나서 한동안 멍하니 있었어。</p>
-    `,
-    comments: [
-      { name: '匿名', date: '2003.09.01', body: '손톱... 너무 무섭다。1화보다 더 직접적이네요' },
-      { name: 'ゆかり', date: '2003.09.02', body: '계속 웃고 있었다는 게 제일 무서워요。밥 못 먹겠어요' },
-      { name: 'みつる（管理人）', date: '2003.09.03', body: '저도 이 이야기 들은 이후로 나폴리탄을 한동안 못 먹었어요（웃음）', isAdmin: true },
-    ]
-  },
-  {
-    id: 2,
-    no: 'No.006',
-    title: '나폴리탄 ～마지막 이야기～',
-    date: '2003.10.02',
-    category: 'napolitan',
-    views: 203,
-    preview: '그 가게에 다시 가봤다. 하지만 가게는 이미 없었고 빈 땅이 되어 있었다. 근처 주민에게 물어보니……',
-    body: `
-      <p class="no-indent">용기를 내서 그 마을에 다시 가봤어。</p>
-      <p>낮에、친구랑 같이。</p>
-      <p>골목은 기억하고 있었어。하지만 가게는 없었어。빈 땅이 되어 있었어。잡초가 자라있고、콘크리트 바닥만 남아있었어。</p>
-      <p>근처에서 산책 중인 할머니한테 물어봤어。</p>
-      <p>「저기에 양식집 없었나요？」</p>
-      <p>할머니는 잠시 생각하더니 말했어。</p>
-      <p class="dialog">「거기요？ 거기는 옛날에 가게가 있었는데。아주 오래전 얘기예요。내가 어렸을 때。」</p>
-      <p>할머니의 나이는 70은 넘어 보였어。</p>
-      <p class="dialog">「그 가게、전쟁 때 없어졌어요。주인이 행방불명이 됐거든요。」</p>
-      <p>행방불명。</p>
-      <p>「그 전에도 좀 이상한 데가 있었다고 했어요。손님이 오면 꼭 나폴리탄만 내놓는다고、그것도 왜 그렇게 맛있는지 이상하다고 마을에서 소문이 났었다고 하더라고요。」</p>
-      <p>할머니는 그 말을 끝으로 걸어가 버렸어。</p>
-      <p>나는 그 빈 땅을 한동안 바라봤어。</p>
-      <p>전쟁 때 없어진 가게。그런데 나는 분명히 거기서 밥을 먹었어。</p>
-      <p>친구랑 나는 아무 말도 하지 않고 마을을 떠났어。</p>
-      <p class="footnote">이 이야기는 이걸로 마무리하려고 해요。더 이상 파고들고 싶지 않아서。 — みつる</p>
-    `,
-    comments: []
-  },
-  {
-    id: 3,
-    no: 'No.003',
-    title: '폐교의 미술실',
-    date: '2003.07.14',
-    category: 'school',
-    views: 934,
-    preview: '탐험하러 간 폐교의 미술실에서 이상한 그림을 발견했다……',
-    body: `
-      <p class="no-indent">중학교 3학년 여름방학 때、친구 셋이서 폐교에 탐험하러 갔어。</p>
-      <p>그 학교는 10년 전에 폐교된 곳인데、마을에서 조금 떨어진 산 기슭에 있었어。낮인데도 어두침침하고 풀이 엄청 자라있었어。</p>
-      <p>교실을 하나씩 돌아다니다가 미술실에 들어갔어。</p>
-      <p>미술실에는 오래된 그림들이 벽에 그대로 붙어 있었어。대부분 색이 바래서 잘 안 보였는데、한 그림만 이상하게 선명했어。</p>
-      <p>아이들이 운동장에서 노는 그림이었어。</p>
-      <p>자세히 보니까 아이들이 전부 같은 방향을 보고 있었어。그림 밖을 향해서。그러니까、나를 향해서。</p>
-      <p>근데 그게 문제가 아니었어。</p>
-      <p>그림 한쪽 구석에、창문 밖에서 아이들을 보고 있는 어른 남자가 그려져 있었어。</p>
-      <p>친구 중 한 명이 말했어。</p>
-      <p class="dialog">「저 그림、아까는 어른 없었는데。」</p>
-      <p>우리는 바로 도망쳤어。</p>
-      <p>지금도 그 어른이 처음부터 있었는지、중간에 생긴 건지 모르겠어。</p>
-    `,
-    comments: [
-      { name: '匿名', date: '2003.07.15', body: '그림이 바뀌었다는 게 사실이면 너무 무서운데요。사진은 없나요？' },
-      { name: 'みつる（管理人）', date: '2003.07.16', body: '이건 친구한테 들은 이야기라서 사진은 없어요。그 친구도 무서워서 카메라 꺼낼 생각도 못 했다고 해요', isAdmin: true },
-    ]
-  },
-  {
-    id: 4,
-    no: 'No.005',
-    title: '빨간 방',
-    date: '2003.08.30',
-    category: 'urban',
-    views: 601,
-    preview: '인터넷을 하던 중 갑자기 팝업창이 떴다。「좋아하세요？」',
-    body: `
-      <p class="no-indent">이건 인터넷에서 떠도는 이야기야。</p>
-      <p>어느 중학생이 인터넷을 하고 있는데 갑자기 팝업창이 떴대。</p>
-      <p class="dialog">「좋아하세요？」</p>
-      <p>닫으려고 했는데 닫히지 않았대。다시 팝업이 뜨더니、</p>
-      <p class="dialog">「빨간 방은 좋아하세요？」</p>
-      <p>또 닫으려고 했는데 안 닫혔대。계속 클릭해도 닫히지 않고 팝업이 점점 많아지더니、마지막에 한 문장이 떴대。</p>
-      <p class="dialog">「좋아요。」</p>
-      <p>그리고 화면이 꺼졌대。</p>
-      <p>다음날 그 아이 방에 가봤더니 방 벽이 온통 빨갛게 칠해져 있었대。</p>
-      <p>아이는 그 방 안에 있었대。</p>
-      <p class="footnote">이건 2002년부터 인터넷에서 떠도는 이야기예요。실제로 비슷한 팝업을 본 사람이 있다는 보고도 있어요。 — みつる</p>
-    `,
-    comments: [
-      { name: 'みゆき', date: '2003.09.01', body: '나도 이 팝업 봤다는 친구가 있어요！ 진짜로 존재하는 건가요' },
-      { name: '匿名', date: '2003.09.05', body: '빨간 방 팝업 URL 아는 사람 있나요？（열지는 않을게요）' },
-      { name: 'みつる（管理人）', date: '2003.09.06', body: 'URL은 모르겠어요。일부러 찾으려고 하지 않는 게 좋을 것 같아요...', isAdmin: true },
-    ]
-  },
-  {
-    id: 5,
-    no: 'No.002',
-    title: '택시 안에서',
-    date: '2003.04.28',
-    category: 'experience',
-    views: 312,
-    preview: '늦은 밤 택시를 탔는데、목적지에 도착해서 보니까 뒷좌석에 아무도 없었다……',
-    body: `
-      <p class="no-indent">이건 이모한테서 들은 이야기야。이모는 택시 기사거든。</p>
-      <p>어느 날 늦은 밤、역 앞에서 손님을 태웠대。여자 손님이었는데、조용히 목적지를 말하고는 아무 말도 안 했대。</p>
-      <p>목적지에 도착해서 「다 왔습니다」하고 돌아봤더니、뒷좌석에 아무도 없었대。</p>
-      <p>이모는 처음엔 깜짝 놀랐는데、어떻게든 합리적인 설명을 찾으려고 했대。신호 대기 중에 몰래 내렸다던가、착각이었다던가。</p>
-      <p>근데 목적지가 문제였어。</p>
-      <p>손님이 말한 주소는 묘지였대。</p>
-      <p>이모는 그 날 이후로 야간 운행은 하지 않는대。</p>
-    `,
-    comments: [
-      { name: 'たろう', date: '2003.05.02', body: '묘지... 클리셰라고 생각하면서도 무섭네요。이모분은 그 후로 괜찮으세요？' },
-      { name: 'みつる（管理人）', date: '2003.05.02', body: '이모는 지금도 낮에만 일한대요。이 이야기는 잘 안 하려고 한다고 했어요', isAdmin: true },
-    ]
-  },
-];
-
-// 초기 댓글 데이터 (스토리별)
-const storyComments = {};
-stories.forEach(s => { storyComments[s.id] = [...s.comments]; });
-
-// 게시판 데이터
-let bbsPosts = [
-  { name: 'ゆかり', date: '2003.10.01 22:14', body: '나폴리탄 이야기 다 읽었어요。마지막 편이 제일 무서웠어요。그 할머니 말이 계속 머릿속에 맴돌아요。' },
-  { name: '匿名', date: '2003.09.30 01:33', body: '저도 비슷한 경험이 있어요。모르는 식당에서 먹었는데 나중에 거기 가봤더니 건물이 없었어요。꿈이었는지도 모르겠지만 그 맛은 생생하게 기억나요。' },
-  { name: 'たろう', date: '2003.09.28 19:45', body: '이 사이트 친구한테 소개받아서 왔어요。학교에서도 비슷한 이야기 도는데 지역에 따라 조금씩 다르네요。' },
-  { name: '오빠가무서워', date: '2003.09.25 03:12', body: '새벽에 혼자 읽는거 아니었는데... 이제 어떡하죠' },
-];
-
-// 방명록 데이터
-let gbEntries = [
-  { name: 'みゆき', url: 'http://www.geocities.co.jp/miyuki/', date: '2003.09.29', body: '미츠루군！ 나폴리탄 3편 기다리고 있었어요~！ 마지막 이야기 무서웠어요。제 사이트에도 링크 걸어뒀어요。', reply: '미유키！ 고마워～。3편 드디어 올렸으니까 읽어봐 (웃음)　— みつる' },
-  { name: 'ゆかり', url: '', date: '2003.09.20', body: '처음 왔어요。나폴리탄 이야기 너무 무서웠어요。이런 사이트를 찾고 있었어요！ 북마크 했어요！', reply: '방문 감사합니다！ 또 놀러오세요～　— みつる' },
-  { name: '통행인', url: '', date: '2003.09.15', body: '링크 타고 왔어요。이런 수상한 이야기 모은 사이트 좋아해요。즐겨찾기 했습니다。', reply: '' },
-  { name: 'たろう', url: 'http://hp.vector.co.jp/taro/', date: '2003.09.10', body: '게임 페이지 운영하는 타로예요。링크 신청해도 될까요？ 상호링크 부탁해요！', reply: '물론이죠！ 저도 링크 걸겠습니다　— みつる' },
-];
-
-// ===== 현재 상태 =====
-let currentPage = 'top';
-let currentStory = null;
-let currentCategory = 'all';
-
-// ===== 유틸 =====
-function now() {
-  const d = new Date();
-  return `2003.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-}
-function nowDate() {
-  const d = new Date();
-  return `2003.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-}
-
-function setStatus(txt) {
-  document.getElementById('status-text').textContent = txt;
-}
-function setAddr(url) {
-  document.getElementById('addrbox').value = url;
-}
-
-// ===== 팝업 =====
-function closePopup() {
-  document.getElementById('popup-overlay').classList.remove('show');
-}
-function showPopupMsg(msg) {
-  document.querySelector('.popup-body').innerHTML = `<p>${msg}</p><br><button class="popup-btn" onclick="closePopup()">　확인　</button>`;
-  document.getElementById('popup-overlay').classList.add('show');
-}
-
-// ===== 페이지 전환 =====
-function showPage(name, btn) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  if (btn) btn.classList.add('active');
-
-  currentPage = name;
-
-  const urls = {
-    top: 'http://www.geocities.co.jp/Heartland-Cosmos/7734/',
-    stories: 'http://www.geocities.co.jp/Heartland-Cosmos/7734/stories.html',
-    bbs: 'http://www.geocities.co.jp/Heartland-Cosmos/7734/bbs.html',
-    guestbook: 'http://www.geocities.co.jp/Heartland-Cosmos/7734/guestbook.html',
-    profile: 'http://www.geocities.co.jp/Heartland-Cosmos/7734/profile.html',
-    links: 'http://www.geocities.co.jp/Heartland-Cosmos/7734/links.html',
-  };
-  setAddr(urls[name] || urls.top);
-  setStatus('완료');
-
-  if (name === 'stories') {
-    showStoryList(currentCategory);
-  }
-  if (name === 'bbs') renderBbs();
-  if (name === 'guestbook') renderGuestbook();
-}
-
-// ===== 괴담 목록 =====
-function showStoryList(cat) {
-  currentCategory = cat;
-  document.getElementById('story-detail-view').style.display = 'none';
-  const listEl = document.getElementById('story-list-view');
-  listEl.style.display = 'block';
-
-  const catNames = { all:'전체', napolitan:'나폴리탄', school:'학교 괴담', urban:'도시전설', experience:'체험담' };
-  document.getElementById('story-list-head').textContent = `■ 괴담 목록 - ${catNames[cat] || '전체'}`;
-
-  const filtered = cat === 'all' ? stories : stories.filter(s => s.category === cat);
-
-  // 사이드바 링크 활성화
-  document.querySelectorAll('.sb-link').forEach(l => l.style.fontWeight = '');
-
-  listEl.innerHTML = filtered.map(s => `
-    <div class="story-list-item" onclick="openStory(${s.id})">
-      <div class="sl-head"><span class="sl-no">${s.no}</span><span class="sl-date">${s.date}</span></div>
-      <div class="sl-title">${s.title}</div>
-      <div class="sl-preview">${s.preview}</div>
-      <div class="sl-tags">카테고리: ${catNames[s.category]} / 조회: ${s.views.toLocaleString()}</div>
-    </div>
-  `).join('');
-
-  if (filtered.length === 0) {
-    listEl.innerHTML = '<div style="padding:20px; text-align:center; color:#888; font-size:12px;">이 카테고리에는 아직 괴담이 없습니다。</div>';
-  }
-
-  // 페이지가 stories가 아니면 전환
-  if (currentPage !== 'stories') {
-    showPage('stories', document.querySelectorAll('.nav-btn')[1]);
-  }
-}
-
-function openStory(id) {
-  const s = stories.find(x => x.id === id);
-  if (!s) return;
-  s.views++;
-
-  document.getElementById('story-list-view').style.display = 'none';
-  const detail = document.getElementById('story-detail-view');
-  detail.style.display = 'block';
-
-  const comments = storyComments[id] || [];
-
-  detail.querySelector('#story-detail-content').innerHTML = `
-    <div style="margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-      <div>
-        <span style="font-size:11px; color:#555; margin-right:8px;">${s.no}</span>
-        <span style="font-size:18px; font-weight:bold; color:#000080;">${s.title}</span>
-      </div>
-      <span style="font-size:10px; color:#888;">${s.date} / 조회: ${s.views.toLocaleString()}</span>
-    </div>
-    <hr class="fancy">
-    <div class="story-body-wrap">${s.body}</div>
-
-    <div class="sec-head">■ 댓글 (${comments.length})</div>
-    <div id="comment-list-${id}" style="margin-bottom:10px;">${renderComments(id)}</div>
-
-    <div class="comment-form-box">
-      <div class="sec-head2" style="margin-top:0;">댓글 쓰기</div>
-      <div class="form-row"><label>이름</label><input type="text" id="cmt-name-${id}" placeholder="닉네임 (익명 가능)" maxlength="20"></div>
-      <div class="form-row" style="align-items:flex-start;"><label style="padding-top:3px;">내용</label><textarea id="cmt-body-${id}" placeholder="댓글을 입력해주세요…" style="width:100%; flex:1; height:60px;"></textarea></div>
-      <div style="text-align:right;"><button class="win-btn" onclick="postComment(${id})">　투고　</button></div>
-    </div>
-  `;
-
-  if (currentPage !== 'stories') {
-    showPage('stories', document.querySelectorAll('.nav-btn')[1]);
-  }
-
-  setAddr(`http://www.geocities.co.jp/Heartland-Cosmos/7734/story${id+1}.html`);
-  setStatus(`${s.title} - 로딩 완료`);
-}
-
-function renderComments(id) {
-  const comments = storyComments[id] || [];
-  if (comments.length === 0) return '<div style="color:#888; font-size:11px; padding:8px 0;">아직 댓글이 없습니다。첫 댓글을 남겨주세요！</div>';
-  return comments.map(c => `
-    <div class="comment-item">
-      <div class="c-meta">
-        <span class="c-name ${c.isAdmin ? 'c-admin' : ''}">${c.name}${c.isAdmin ? '（관리인）' : ''}</span>
-        <span class="c-date">${c.date}</span>
-      </div>
-      <div class="c-body">${c.body}</div>
-    </div>
-  `).join('');
-}
-
-function postComment(id) {
-  const name = document.getElementById(`cmt-name-${id}`).value.trim() || '匿名';
-  const body = document.getElementById(`cmt-body-${id}`).value.trim();
-  if (!body) { showPopupMsg('내용을 입력해주세요。'); return; }
-
-  storyComments[id].push({ name, date: nowDate(), body });
-  document.getElementById(`cmt-body-${id}`).value = '';
-  document.getElementById(`cmt-name-${id}`).value = '';
-  document.getElementById(`comment-list-${id}`).innerHTML = renderComments(id);
-
-  // 댓글 수 업데이트
-  const head = document.querySelector('#story-detail-content .sec-head');
-  if (head) head.textContent = `■ 댓글 (${storyComments[id].length})`;
-}
-
-function backToList() {
-  document.getElementById('story-detail-view').style.display = 'none';
-  document.getElementById('story-list-view').style.display = 'block';
-  setAddr('http://www.geocities.co.jp/Heartland-Cosmos/7734/stories.html');
-  setStatus('완료');
-}
-
-// ===== 게시판 =====
-function renderBbs() {
-  document.getElementById('bbs-list').innerHTML = bbsPosts.slice().reverse().map((p, i) => `
-    <div class="comment-item">
-      <div class="c-meta">
-        <span class="c-name">${p.name}</span>
-        <span class="c-date">${p.date}</span>
-      </div>
-      <div class="c-body">${p.body}</div>
-    </div>
-  `).join('');
-}
-
-function postBbs() {
-  const name = document.getElementById('bbs-name').value.trim() || '匿名';
-  const body = document.getElementById('bbs-body').value.trim();
-  if (!body) { showPopupMsg('내용을 입력해주세요。'); return; }
-  bbsPosts.push({ name, date: now(), body });
-  document.getElementById('bbs-body').value = '';
-  document.getElementById('bbs-name').value = '';
-  renderBbs();
-}
-
-// ===== 방명록 =====
-function renderGuestbook() {
-  document.getElementById('gb-list').innerHTML = gbEntries.slice().reverse().map(e => `
-    <div class="gb-entry">
-      <div class="gb-meta">
-        <span class="gb-name-label">${e.name}</span>
-        ${e.url ? `<a href="#" style="font-size:10px; color:#000080;" onclick="showPopupMsg('외부 링크는 지원되지 않습니다。')">${e.url}</a>` : ''}
-        <span style="margin-left:8px; color:#aaa;">${e.date}</span>
-      </div>
-      <div>${e.body}</div>
-      ${e.reply ? `<div class="gb-reply"><span class="reply-label">↩ 관리인 답글：</span> ${e.reply}</div>` : ''}
-    </div>
-  `).join('');
-}
-
-function postGuestbook() {
-  const name = document.getElementById('gb-name').value.trim() || '匿名';
-  const url = document.getElementById('gb-url').value.trim();
-  const body = document.getElementById('gb-body').value.trim();
-  if (!body) { showPopupMsg('메시지를 입력해주세요。'); return; }
-  gbEntries.push({ name, url, date: nowDate(), body, reply: '' });
-  document.getElementById('gb-body').value = '';
-  document.getElementById('gb-name').value = '';
-  document.getElementById('gb-url').value = '';
-  renderGuestbook();
-}
-
-// ===== 초기화 =====
-window.onload = function() {
-  showStoryList('all');
-  renderBbs();
-  renderGuestbook();
-
-  // 카운터 올라가는 애니메이션
-  let count = 8432;
-  setTimeout(() => {
-    count++;
-    document.getElementById('counter').textContent = String(count).padStart(6, '0');
-  }, 1500);
-};
-</script>
+<script src="script.js"></script>
 </body>
 </html>

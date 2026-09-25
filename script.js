@@ -1,22 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. 인트로 1.8초 후 완벽히 해제
+  // 1. 인트로 해제 (트랜지션 속도가 느려진 것에 맞춰 2.6초 대기)
   const introEl = document.getElementById('introOverlay');
   if (introEl) {
     document.body.classList.add('intro-lock');
     setTimeout(() => {
       introEl.classList.add('is-done');
       document.body.classList.remove('intro-lock');
-    }, 2200);
+    }, 2600);
   }
 
-  // 2. 외부 이동 버튼 클릭 시 새 탭으로 demo.html 열기 로직
-  const demoButtons = document.querySelectorAll('.demo-btn');
+  // 2. 스크롤 위치 감지해 헤더 유리가 차오르는 효과
+  const navWrapper = document.getElementById('navWrapper');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      navWrapper.classList.add('scrolled');
+    } else {
+      navWrapper.classList.remove('scrolled');
+    }
+  });
 
+  // 3. 데모 이동 버튼 동작
+  const demoButtons = document.querySelectorAll('.demo-btn');
   demoButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      // demo.html 페이지를 새 탭으로 오픈
       window.open('demo.html', '_blank');
+    });
+  });
+
+  // 4. 리퀴드 글래스 패널 마우스 호버 패럴랙스
+  const glassCards = document.querySelectorAll('.hero-side, .inspection, .contrast-card, .check-card');
+  glassCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
     });
   });
 });

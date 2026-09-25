@@ -2,46 +2,53 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>dev</title>
 <style>
   * {
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   body {
     margin: 0;
-    padding: 24px;
+    padding: 20px;
     min-height: 100vh;
-    background: #0f1115;
-    color: #8a8f9d;
+    background: #090a0d;
+    color: #a0a5b5;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow-x: hidden;
   }
 
   .card {
+    position: relative;
     width: 100%;
-    max-width: 380px;
-    background: #16181f;
-    border: 1px solid #262932;
-    border-radius: 16px;
+    max-width: 400px;
+    background: rgba(22, 25, 34, 0.75);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
     padding: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
   }
 
-  /* 1200x675 원본 비율 사진을 안 찌그러뜨리고 큼직하게 띄우는 프레임 */
   .neko-box {
     width: 100%;
     aspect-ratio: 1 / 1;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    background: #20232d;
-    border: 1px solid #2a2e3b;
+    background: #181b24;
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .neko-box img {
@@ -52,27 +59,214 @@
   }
 
   .btn {
-    margin-top: 20px;
+    margin-top: 16px;
     width: 100%;
-    padding: 14px 0;
-    background: #eef0f5;
+    padding: 16px 0;
+    background: #ffffff;
     color: #0f1115;
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 800;
     text-align: center;
     text-decoration: none;
-    border-radius: 10px;
-    transition: background 0.15s ease;
+    border-radius: 14px;
+    transition: transform 0.2s ease, background 0.2s ease;
   }
 
-  .btn:hover {
-    background: #ffffff;
+  .btn:hover { background: #e2e6f0; }
+
+  .btn-action {
+    margin-top: 10px;
+    width: 100%;
+    padding: 14px 0;
+    background: rgba(255, 255, 255, 0.08);
+    color: #ff6b81;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: center;
+    border: 1px solid rgba(255, 107, 129, 0.3);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-action:hover {
+    background: rgba(255, 107, 129, 0.18);
+    transform: translateY(-2px);
   }
 
   .label {
     margin-top: 14px;
     font-size: 12px;
-    color: #525765;
+    color: #62687a;
+    font-weight: 600;
+  }
+
+  /* -------------------------------------------------------------
+     💥 대문짝 Fullscreen 괴롭히기 모달 💥
+  ------------------------------------------------------------- */
+  .fullscreen-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(5, 6, 9, 0.95);
+    backdrop-filter: blur(16px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fullscreen-modal.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .big-neko-frame {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1 / 1;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    cursor: crosshair;
+    touch-action: manipulation;
+  }
+
+  .big-neko-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  .modal-tip {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .modal-btn {
+    flex: 1;
+    padding: 14px 0;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+  }
+
+  .modal-btn.clean {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .modal-btn.close {
+    background: #ffffff;
+    color: #000;
+  }
+
+  /* 💦 액체 오버레이 레이어 💦 */
+  .liquid-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* 1. 하단에서 목표점까지 뷰웅- 날아가는 액체 입자 모션 */
+  .flying-blob {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle at 35% 35%, #ffffff 0%, #fffde8 70%, #f7f3ce 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(255, 253, 210, 0.8);
+    pointer-events: none;
+    z-index: 20;
+    animation: flyCurve 0.28s cubic-bezier(0.12, 0.85, 0.35, 1) forwards;
+  }
+
+  @keyframes flyCurve {
+    0% {
+      opacity: 0.9;
+      transform: translate(var(--startX), var(--startY)) scale(0.4);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(var(--targetX), var(--targetY)) scale(1.1);
+    }
+  }
+
+  /* 2. 착붙는 노란빛 유백색 액체 자국 */
+  .splatter-spot {
+    position: absolute;
+    background: radial-gradient(circle at 35% 35%, #ffffff 0%, #fffded 60%, rgba(247, 243, 205, 0.96) 100%);
+    box-shadow: inset -2px -2px 6px rgba(120, 110, 50, 0.2), 0 4px 14px rgba(255, 254, 215, 0.6);
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0;
+    animation: landAndSplat 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  }
+
+  .splatter-spot.type-0 { border-radius: 40% 60% 70% 30% / 50% 30% 70% 50%; }
+  .splatter-spot.type-1 { border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
+  .splatter-spot.type-2 { border-radius: 30% 70% 40% 60% / 60% 30% 70% 40%; }
+  .splatter-spot.type-3 { border-radius: 50% 50% 30% 70% / 70% 40% 60% 30%; }
+
+  @keyframes landAndSplat {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.1); }
+    60% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    100% { opacity: 0.96; transform: translate(-50%, -50%) scale(1) rotate(var(--rot)); }
+  }
+
+  .splatter-spot::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 35%;
+    width: 30%;
+    height: 22px;
+    background: inherit;
+    border-radius: 0 0 12px 12px;
+  }
+
+  /* 3. 💬 아루네코 말풍선 팝업 */
+  .speech-bubble {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    color: #111;
+    padding: 8px 15px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 800;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    z-index: 30;
+    transform: translate(-50%, -100%) scale(0.5);
+    opacity: 0;
+    animation: popTalk 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  @keyframes popTalk {
+    0% { opacity: 0; transform: translate(-50%, -80%) scale(0.5); }
+    15% { opacity: 1; transform: translate(-50%, -120%) scale(1.05); }
+    80% { opacity: 1; transform: translate(-50%, -130%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -150%) scale(0.8); }
   }
 </style>
 </head>
@@ -83,13 +277,125 @@
     <img src="cute.jpg" alt="데모네코" onerror="this.src='https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80'">
   </div>
 
-  <!-- '야루네코' 구글 검색 결과 연결 -->
-  <a href="https://www.google.com/search?sca_esv=f490e9746bfcf51c&sxsrf=APpeQnsoQgmztiq4SGGGLs-D2l7JzYThwQ:1790319634768&udm=2&fbs=ABfTbFUgt-aXEFkBhPo84x72c1XoLHFs6TcISYM3FayWAWWA7x3ZDrzG9CGSPZ4zI2S4lLjahG8WC85AFbgHa_h6Y7Pns5L0Je8-rxCe2EjJJS_CdtBhaAFfvb2qvGvpnJS2-Gc0C38RnCjgIQ5M2UW94VY6hluLtQnCQYPss9u18otk78XrnjGd4baukmlQSt4FkH-duDA2h2rP8MPkrpmva-xYBU1xBwUPZbD9R_XeDaLaLRl_f4k&q=%EC%95%BC%EB%A3%A8%EB%84%A4%EC%BD%94&sa=X&ved=2ahUKEwi1k_WulImXAxVmulYBHTXUMSsQtKgLegQIGRAB&cshid=1790319646177&biw=1536&bih=776&dpr=1.25&safe=active&ssui=on" target="_blank" class="btn">
-    야루네코 보러가기 ↗
+  <a href="https://www.google.com/search?q=%EC%95%BC%EB%A3%A8%EB%84%A4%EC%BD%94&udm=2" target="_blank" class="btn">
+    아루네코 보러가기 ↗
   </a>
+
+  <button type="button" class="btn-action" id="openModalBtn">
+    아루네코 괴롭히기
+  </button>
 
   <div class="label">test page</div>
 </div>
+
+<!-- 대문짝 모달 -->
+<div class="fullscreen-modal" id="modalOverlay">
+  <div class="modal-tip">💦 아루네코를 클릭해서 발사해보세요!</div>
+  
+  <div class="big-neko-frame" id="bigNekoFrame">
+    <img src="cute.jpg" alt="아루네코 대형" onerror="this.src='https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80'">
+    <div class="liquid-layer" id="liquidLayer"></div>
+  </div>
+
+  <div class="modal-actions">
+    <button type="button" class="modal-btn clean" id="cleanBtn">🧹 닦아내기</button>
+    <button type="button" class="modal-btn close" id="closeModalBtn">닫기</button>
+  </div>
+</div>
+
+<script>
+  const openModalBtn = document.getElementById('openModalBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const bigNekoFrame = document.getElementById('bigNekoFrame');
+  const liquidLayer = document.getElementById('liquidLayer');
+  const cleanBtn = document.getElementById('cleanBtn');
+
+  const nekoQuotes = [
+    "흠냐흠냐... 하지마아...", "으응... 머야 진짜...", "하지말라구우 ㅠㅠ", "튜-브 흡입중이란 말야...",
+    "냐앙... 저리가...", "흠냐... 얼굴에 묻히지마...", "또 또 이러지...", "축축하잖아!!",
+    "흠냐흠냐... 잠 좀 자자...", "하지마아아앗!", "귀찮게 하지마...", "으에에... 끈적해...",
+    "누나 바쁘단 말야 흠냐...", "야! 하지마!", "냐아아... 그만해...", "진짜 못말려...",
+    "흠냐... 눈에 들어가잖아...", "에잇... 하지 말라니까!", "으응... 자꾸 어디 쏘는거야...",
+    "하지마 ㅠㅠ 끈적거려...", "냐아앙... 나 빠져나갈래...", "흠냐흠냐... 방해하지마...",
+    "으 진짜... 그만 쏴!", "누나 때릴거야?", "냐앙! 그만!", "흠냐... 나중에 해...",
+    "차가워!! 하지마!", "어라... 왜 자꾸 묻혀...", "흠냐흠냐... 저리 가아...",
+    "야루네코 괴롭히지마 ㅠㅠ", "진짜 안 그만둬?!", "냐아... 얼굴 끈적거려...", "지저분하게 하지마아...",
+    "흠냐... 튜브 빠지잖아...", "아앙... 하지말라니까...", "누나 자는거 안보여?", "그만 쏘라구!",
+    "으응... 왜 자꾸 그래...", "하지마아... 나쁜 사람...", "냐아앙... 닦아줘 어서...",
+    "흠냐흠냐... 꿈속에서도 괴롭히네...", "또 쐈어?!", "크엉... 하지마!", "냐앙... 살려줘...",
+    "하지말라고 했을텐데?!", "으에... 축축해 죽겠어", "흠냐... 졸린단 말야..."
+  ];
+
+  openModalBtn.addEventListener('click', () => modalOverlay.classList.add('active'));
+  closeModalBtn.addEventListener('click', () => modalOverlay.classList.remove('active'));
+
+  function launchLiquid(clientX, clientY) {
+    const rect = bigNekoFrame.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    // 1. 날아가는 입자
+    const fly = document.createElement('div');
+    fly.classList.add('flying-blob');
+    
+    const startX = rect.width / 2 + (Math.random() * 80 - 40);
+    const startY = rect.height + 40;
+
+    fly.style.setProperty('--startX', `${startX}px`);
+    fly.style.setProperty('--startY', `${startY}px`);
+    fly.style.setProperty('--targetX', `${x}px`);
+    fly.style.setProperty('--targetY', `${y}px`);
+
+    liquidLayer.appendChild(fly);
+
+    // 2. 안착
+    setTimeout(() => {
+      fly.remove();
+
+      const spot = document.createElement('div');
+      const shapeType = Math.floor(Math.random() * 4);
+      spot.classList.add('splatter-spot', `type-${shapeType}`);
+
+      const size = Math.floor(Math.random() * 55) + 65;
+      const rot = Math.floor(Math.random() * 360);
+
+      spot.style.width = `${size}px`;
+      spot.style.height = `${size}px`;
+      spot.style.left = `${x}px`;
+      spot.style.top = `${y}px`;
+      spot.style.setProperty('--rot', `${rot}deg`);
+
+      liquidLayer.appendChild(spot);
+
+      // 3. 말풍선
+      const bubble = document.createElement('div');
+      bubble.classList.add('speech-bubble');
+      const randomQuote = nekoQuotes[Math.floor(Math.random() * nekoQuotes.length)];
+      bubble.innerText = randomQuote;
+      bubble.style.left = `${x}px`;
+      bubble.style.top = `${y}px`;
+
+      liquidLayer.appendChild(bubble);
+
+      setTimeout(() => bubble.remove(), 1200);
+    }, 280);
+  }
+
+  bigNekoFrame.addEventListener('click', (e) => {
+    launchLiquid(e.clientX, e.clientY);
+  });
+
+  bigNekoFrame.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    launchLiquid(touch.clientX, touch.clientY);
+  }, { passive: false });
+
+  cleanBtn.addEventListener('click', () => {
+    liquidLayer.innerHTML = '';
+  });
+</script>
 
 </body>
 </html>

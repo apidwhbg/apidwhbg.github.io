@@ -21,6 +21,7 @@ body {
   font-family: "Noto Sans KR", -apple-system, sans-serif;
   line-height: 1.85;
   word-break: keep-all;
+  overflow-x: hidden; /* 모바일 좌우 헛스크롤 방지 */
 }
 
 a { color: inherit; text-decoration: none; }
@@ -57,10 +58,8 @@ body.intro-lock { overflow: hidden; }
 .wordmark span { font-size: 11.5px; font-weight: 800; color: var(--accent-blue); margin-left: 4px; }
 .nav-link { font-size: 14px; font-weight: 800; color: var(--accent-blue); }
 
-/* 시원하게 뻥 뚫어버린 대형 여백 구조 */
+/* 프리미엄 초대형 여백 컨테이너 */
 .m-container { padding: 40px 20px 100px; }
-
-/* 뭉텅이(파트) 간 간격 140px */
 .m-section { margin-bottom: 140px; }
 
 .part-badge {
@@ -102,7 +101,7 @@ body.intro-lock { overflow: hidden; }
   line-height: 1.75; 
 }
 
-/* 박스 카드 사이 간격 36px */
+/* 카드 뭉치 배치 */
 .m-auto-cards { 
   display: flex; 
   flex-direction: column; 
@@ -110,7 +109,7 @@ body.intro-lock { overflow: hidden; }
   width: 100%;
 }
 
-/* 💥 절대 깨지지 않는 박스 카드 구조 💥 */
+/* 💥 카드 기본 박스 (접힌 상태) 💥 */
 .fold-card {
   width: 100%;
   background: rgba(255, 255, 255, 0.95);
@@ -119,13 +118,11 @@ body.intro-lock { overflow: hidden; }
   padding: 26px 24px;
   box-shadow: 0 8px 24px rgba(10, 12, 16, 0.04);
   box-sizing: border-box;
-  overflow: hidden; /* 확장 시 텍스트 넘침 방지 */
   
-  /* 1.2초 둔탁하고 묵직한 모션 커브 */
+  /* 1.2초 묵직하고 쫀득한 트랜지션 */
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
               box-shadow 1.2s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.8s ease;
-  will-change: transform;
 }
 
 .fold-card.muted { background: rgba(200, 207, 222, 0.95); }
@@ -135,7 +132,7 @@ body.intro-lock { overflow: hidden; }
 .card-head { 
   display: flex; 
   align-items: center; 
-  gap: 14px; 
+  gap: 16px; 
   width: 100%;
 }
 .card-head .c-num { font-size: 18px; font-weight: 900; color: var(--accent-blue); flex-shrink: 0; }
@@ -146,15 +143,12 @@ body.intro-lock { overflow: hidden; }
 .fold-card.featured .card-tag { background: var(--accent-blue); color: #fff; }
 .check-num { font-size: 20px; font-weight: 900; color: var(--danger-red); flex-shrink: 0; }
 
-/* 💥 브라우저 완벽 대응 세부 설명 펼침 트랜지션 💥 */
+/* 💥 핵심: 기본 상태에서 세부 설명 완벽 숨김 💥 */
 .card-detail {
-  max-height: 0;
+  display: none; /* 모바일 브라우저에서 텍스트 무단 노출 완벽 차단 */
   opacity: 0;
-  overflow: hidden;
   margin-top: 0;
-  transition: max-height 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-              opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-              margin-top 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.8s ease, margin-top 0.8s ease;
 }
 
 .card-detail p {
@@ -167,7 +161,7 @@ body.intro-lock { overflow: hidden; }
 }
 .fold-card.featured .card-detail p { color: #dce1ee; }
 
-/* 🌟 화면 중앙 진입 연출 (is-open) */
+/* 🌟 스크롤로 활성화되었을 때만 열리는 애니메이션 (is-open) */
 .fold-card.is-open {
   transform: translateY(-4px);
   box-shadow: 0 16px 36px rgba(0, 75, 229, 0.12);
@@ -176,9 +170,15 @@ body.intro-lock { overflow: hidden; }
 .fold-card.danger-card.is-open { border-color: var(--danger-red); }
 
 .fold-card.is-open .card-detail {
-  max-height: 250px; /* 텍스트 전체가 여유롭게 펼쳐지도록 설정 */
+  display: block; /* 활성화 시에만 텍스트 출력 */
   opacity: 1;
-  margin-top: 18px; /* 펼쳐졌을 때 헤더와 문단 사이 여백 */
+  margin-top: 18px; /* 펼쳐졌을 때 생기는 매끄러운 윗 여백 */
+  animation: fadeInSlow 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInSlow {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Part 05 약속 */

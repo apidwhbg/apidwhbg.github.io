@@ -25,7 +25,7 @@ body {
 
 a { color: inherit; text-decoration: none; }
 
-/* 인트로 */
+/* 인트로 오버레이 */
 body.intro-lock { overflow: hidden; }
 .intro {
   position: fixed; inset: 0; z-index: 999; background: #08090c;
@@ -50,16 +50,17 @@ body.intro-lock { overflow: hidden; }
   display: flex; align-items: center; justify-content: space-between;
   background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border-bottom: 1px solid rgba(10, 12, 16, 0.08);
 }
 .wordmark { font-size: 18px; font-weight: 900; color: var(--ink-primary); }
 .wordmark span { font-size: 11.5px; font-weight: 800; color: var(--accent-blue); margin-left: 4px; }
 .nav-link { font-size: 14px; font-weight: 800; color: var(--accent-blue); }
 
-/* 💥 시원하게 뻥 뚫어버린 대형 여백 구조 💥 */
+/* 시원하게 뻥 뚫어버린 대형 여백 구조 */
 .m-container { padding: 40px 20px 100px; }
 
-/* 파트(섹션) 간 간격을 140px로 획기적으로 넓힘 */
+/* 뭉텅이(파트) 간 간격 140px */
 .m-section { margin-bottom: 140px; }
 
 .part-badge {
@@ -81,7 +82,7 @@ body.intro-lock { overflow: hidden; }
 .hero-lead { 
   font-size: 16px; 
   color: var(--ink-sub); 
-  margin: 0 0 48px; /* 설명과 카드가 서로 확 시원하게 분리됨 */
+  margin: 0 0 48px; 
   font-weight: 500; 
   line-height: 1.8; 
 }
@@ -101,19 +102,24 @@ body.intro-lock { overflow: hidden; }
   line-height: 1.75; 
 }
 
-/* 💥 박스 카드 사이 간격을 36px로 확 띄움 💥 */
+/* 박스 카드 사이 간격 36px */
 .m-auto-cards { 
   display: flex; 
   flex-direction: column; 
-  gap: 36px; /* 박스끼리 서로 붙지 않게 시원시원하게 배치 */
+  gap: 36px; 
+  width: 100%;
 }
 
+/* 💥 절대 깨지지 않는 박스 카드 구조 💥 */
 .fold-card {
+  width: 100%;
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid #ffffff;
   border-radius: 26px;
-  padding: 30px 24px; /* 박스 내부 패딩도 넉넉하게 확장 */
+  padding: 26px 24px;
   box-shadow: 0 8px 24px rgba(10, 12, 16, 0.04);
+  box-sizing: border-box;
+  overflow: hidden; /* 확장 시 텍스트 넘침 방지 */
   
   /* 1.2초 둔탁하고 묵직한 모션 커브 */
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -126,37 +132,42 @@ body.intro-lock { overflow: hidden; }
 .fold-card.featured { background: var(--accent-dark); color: #fff; }
 .fold-card.danger-card { border: 1.5px solid #fecdca; background: #ffffff; }
 
-.card-head { display: flex; align-items: center; gap: 16px; }
-.card-head .c-num { font-size: 18px; font-weight: 900; color: var(--accent-blue); }
-.card-head strong { font-size: 17.5px; font-weight: 800; color: var(--ink-primary); }
-.fold-card.featured .card-head h3 { color: #fff; font-size: 17.5px; margin: 0; }
-.fold-card.muted .card-head h3 { color: var(--ink-primary); font-size: 17.5px; margin: 0; }
-.card-tag { display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 800; background: rgba(0,0,0,0.08); }
+.card-head { 
+  display: flex; 
+  align-items: center; 
+  gap: 14px; 
+  width: 100%;
+}
+.card-head .c-num { font-size: 18px; font-weight: 900; color: var(--accent-blue); flex-shrink: 0; }
+.card-head strong { font-size: 17.5px; font-weight: 800; color: var(--ink-primary); line-height: 1.4; }
+.fold-card.featured .card-head h3 { color: #fff; font-size: 17.5px; margin: 0; line-height: 1.4; }
+.fold-card.muted .card-head h3 { color: var(--ink-primary); font-size: 17.5px; margin: 0; line-height: 1.4; }
+.card-tag { display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 800; background: rgba(0,0,0,0.08); flex-shrink: 0; }
 .fold-card.featured .card-tag { background: var(--accent-blue); color: #fff; }
-.check-num { font-size: 20px; font-weight: 900; color: var(--danger-red); }
+.check-num { font-size: 20px; font-weight: 900; color: var(--danger-red); flex-shrink: 0; }
 
-/* 세부 설명 확장 모션 */
+/* 💥 브라우저 완벽 대응 세부 설명 펼침 트랜지션 💥 */
 .card-detail {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-              opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 0;
   opacity: 0;
+  overflow: hidden;
+  margin-top: 0;
+  transition: max-height 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              margin-top 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card-detail p {
-  overflow: hidden;
   margin: 0;
   font-size: 15px;
   color: var(--ink-body);
   line-height: 1.8;
   font-weight: 500;
-  padding-top: 0;
-  transition: padding-top 1.0s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
 }
 .fold-card.featured .card-detail p { color: #dce1ee; }
 
-/* 🌟 화면 중앙 진입 연출 */
+/* 🌟 화면 중앙 진입 연출 (is-open) */
 .fold-card.is-open {
   transform: translateY(-4px);
   box-shadow: 0 16px 36px rgba(0, 75, 229, 0.12);
@@ -165,12 +176,9 @@ body.intro-lock { overflow: hidden; }
 .fold-card.danger-card.is-open { border-color: var(--danger-red); }
 
 .fold-card.is-open .card-detail {
-  grid-template-rows: 1fr;
+  max-height: 250px; /* 텍스트 전체가 여유롭게 펼쳐지도록 설정 */
   opacity: 1;
-}
-
-.fold-card.is-open .card-detail p {
-  padding-top: 20px; /* 펼쳐질 때 헤더와 문단 사이 여백도 넓게 */
+  margin-top: 18px; /* 펼쳐졌을 때 헤더와 문단 사이 여백 */
 }
 
 /* Part 05 약속 */

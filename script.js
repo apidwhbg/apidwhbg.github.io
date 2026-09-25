@@ -41,3 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+// 📱 모바일 기기 감지 시 m_index.html로 자동 이동
+(function redirectToMobile() {
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+                   || (window.innerWidth <= 768);
+
+  if (isMobile && !window.location.pathname.includes('m_index.html')) {
+    window.location.href = 'm_index.html';
+  }
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 기존 PC용 스크립트 로직...
+});

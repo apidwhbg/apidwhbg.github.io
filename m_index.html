@@ -32,7 +32,7 @@
 </div>
 
 <main class="m-container">
-  <!-- Part 01. 매입 원칙 (인트로 끝나고 스스륵 펼쳐짐) -->
+  <!-- Part 01. 매입 원칙 -->
   <section class="m-section" id="part1Section">
     <div class="part-badge">Part 01. 매입 원칙</div>
     <h1 class="hero-title">
@@ -200,25 +200,25 @@
   </footer>
 </div>
 
-<!-- 💥 쫀득한 오프닝 & 둔탁한 스크롤 연동 스크립트 💥 -->
+<!-- 💥 스크롤 속도와 1:1 맞물리는 슬로우 이징 연동 스크립트 💥 -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. 인트로 끝나면 맨 위 Part 01 카드들이 스스륵 오프닝 연출
+  // 1. 인트로 이후 Part 01 오프닝 순차 펼침 (0.26s 시차)
   setTimeout(() => {
     const part1Cards = document.querySelectorAll('#part1Section .fold-card');
     part1Cards.forEach((card, index) => {
       setTimeout(() => {
         card.classList.add('is-open');
-      }, index * 180); // 묵직하게 스스륵 펼쳐지는 시간차
+      }, index * 260);
     });
-  }, 2600); // 인트로 페이드아웃 타이밍에 맞춤
+  }, 2600);
 
-  // 2. Part 02부터는 묵직하게 감기는 스크롤 연동
+  // 2. Part 02~05 느긋한 스크롤 동기화
   const scrollSections = Array.from(document.querySelectorAll('.m-section')).slice(1);
 
   const observerOptions = {
     root: null,
-    rootMargin: '-20% 0px -20% 0px',
+    rootMargin: '-25% 0px -25% 0px',
     threshold: 0.15
   };
 
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cards.forEach((card, index) => {
           setTimeout(() => {
             card.classList.add('is-open');
-          }, index * 150); // 쫀득하게 펼쳐지는 0.15초 시차
+          }, index * 220);
         });
       } else {
         cards.forEach(card => {

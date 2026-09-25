@@ -21,12 +21,12 @@ body {
   font-family: "Noto Sans KR", -apple-system, sans-serif;
   line-height: 1.85;
   word-break: keep-all;
-  overflow-x: hidden; /* 모바일 좌우 헛스크롤 방지 */
+  overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
 
-/* 인트로 오버레이 */
+/* 인트로 */
 body.intro-lock { overflow: hidden; }
 .intro {
   position: fixed; inset: 0; z-index: 999; background: #08090c;
@@ -58,14 +58,16 @@ body.intro-lock { overflow: hidden; }
 .wordmark span { font-size: 11.5px; font-weight: 800; color: var(--accent-blue); margin-left: 4px; }
 .nav-link { font-size: 14px; font-weight: 800; color: var(--accent-blue); }
 
-/* 프리미엄 초대형 여백 컨테이너 */
+/* 시원한 전체 수직 여백 구조 */
 .m-container { padding: 40px 20px 100px; }
+
+/* 뭉텅이(파트) 사이 간격 140px 유지 */
 .m-section { margin-bottom: 140px; }
 
 .part-badge {
   display: inline-flex; padding: 7px 16px; border-radius: 8px;
   background: var(--accent-blue); color: #fff; font-size: 12.5px; font-weight: 800; 
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 .part-badge.danger { background: var(--danger-red); }
 .part-badge.light { background: rgba(255, 255, 255, 0.18); color: #b8d1ff; }
@@ -75,13 +77,13 @@ body.intro-lock { overflow: hidden; }
   line-height: 1.45; 
   font-weight: 900; 
   color: var(--ink-primary); 
-  margin: 0 0 22px; 
+  margin: 0 0 20px; 
 }
 .hero-title strong { color: var(--accent-blue); }
 .hero-lead { 
   font-size: 16px; 
   color: var(--ink-sub); 
-  margin: 0 0 48px; 
+  margin: 0 0 40px; 
   font-weight: 500; 
   line-height: 1.8; 
 }
@@ -89,7 +91,7 @@ body.intro-lock { overflow: hidden; }
 .m-title { 
   font-size: 24px; 
   font-weight: 900; 
-  margin: 0 0 16px; 
+  margin: 0 0 14px; 
   color: var(--ink-primary); 
   line-height: 1.42; 
 }
@@ -97,32 +99,32 @@ body.intro-lock { overflow: hidden; }
   font-size: 15.5px; 
   color: var(--ink-sub); 
   font-weight: 500; 
-  margin: 0 0 44px; 
+  margin: 0 0 36px; 
   line-height: 1.75; 
 }
 
-/* 카드 뭉치 배치 */
+/* 💥 파트 내부 박스 사이 간격을 18px로 줄여 컴팩트하게 정돈 💥 */
 .m-auto-cards { 
   display: flex; 
   flex-direction: column; 
-  gap: 36px; 
+  gap: 18px; 
   width: 100%;
 }
 
-/* 💥 카드 기본 박스 (접힌 상태) 💥 */
+/* 박스 카드 기본 구조 */
 .fold-card {
   width: 100%;
   background: rgba(255, 255, 255, 0.95);
   border: 1px solid #ffffff;
-  border-radius: 26px;
-  padding: 26px 24px;
-  box-shadow: 0 8px 24px rgba(10, 12, 16, 0.04);
+  border-radius: 22px;
+  padding: 22px 20px;
+  box-shadow: 0 6px 20px rgba(10, 12, 16, 0.04);
   box-sizing: border-box;
   
-  /* 1.2초 묵직하고 쫀득한 트랜지션 */
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-              box-shadow 1.2s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.8s ease;
+  /* 1.5초 묵직하고 천천히 감기는 슬로우 보간 모션 */
+  transition: transform 1.5s cubic-bezier(0.12, 0.9, 0.18, 1), 
+              box-shadow 1.5s cubic-bezier(0.12, 0.9, 0.18, 1),
+              border-color 1.0s ease;
 }
 
 .fold-card.muted { background: rgba(200, 207, 222, 0.95); }
@@ -132,62 +134,67 @@ body.intro-lock { overflow: hidden; }
 .card-head { 
   display: flex; 
   align-items: center; 
-  gap: 16px; 
+  gap: 14px; 
   width: 100%;
 }
 .card-head .c-num { font-size: 18px; font-weight: 900; color: var(--accent-blue); flex-shrink: 0; }
-.card-head strong { font-size: 17.5px; font-weight: 800; color: var(--ink-primary); line-height: 1.4; }
-.fold-card.featured .card-head h3 { color: #fff; font-size: 17.5px; margin: 0; line-height: 1.4; }
-.fold-card.muted .card-head h3 { color: var(--ink-primary); font-size: 17.5px; margin: 0; line-height: 1.4; }
-.card-tag { display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 800; background: rgba(0,0,0,0.08); flex-shrink: 0; }
+.card-head strong { font-size: 17px; font-weight: 800; color: var(--ink-primary); line-height: 1.4; }
+.fold-card.featured .card-head h3 { color: #fff; font-size: 17px; margin: 0; line-height: 1.4; }
+.fold-card.muted .card-head h3 { color: var(--ink-primary); font-size: 17px; margin: 0; line-height: 1.4; }
+.card-tag { display: inline-block; padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 800; background: rgba(0,0,0,0.08); flex-shrink: 0; }
 .fold-card.featured .card-tag { background: var(--accent-blue); color: #fff; }
-.check-num { font-size: 20px; font-weight: 900; color: var(--danger-red); flex-shrink: 0; }
+.check-num { font-size: 19px; font-weight: 900; color: var(--danger-red); flex-shrink: 0; }
 
-/* 💥 핵심: 기본 상태에서 세부 설명 완벽 숨김 💥 */
+/* 💥 스크롤 속도에 딱 맞춰 1.8초 동안 느긋하게 스스륵 펼쳐짐 💥 */
 .card-detail {
-  display: none; /* 모바일 브라우저에서 텍스트 무단 노출 완벽 차단 */
+  display: none;
   opacity: 0;
   margin-top: 0;
-  transition: opacity 0.8s ease, margin-top 0.8s ease;
 }
 
 .card-detail p {
   margin: 0;
-  font-size: 15px;
+  font-size: 14.5px;
   color: var(--ink-body);
-  line-height: 1.8;
+  line-height: 1.75;
   font-weight: 500;
   width: 100%;
 }
 .fold-card.featured .card-detail p { color: #dce1ee; }
 
-/* 🌟 스크롤로 활성화되었을 때만 열리는 애니메이션 (is-open) */
+/* 🌟 활성화 시 극도로 자연스러운 느긋한 페이드인 연출 */
 .fold-card.is-open {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 36px rgba(0, 75, 229, 0.12);
-  border-color: rgba(0, 75, 229, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 75, 229, 0.1);
+  border-color: rgba(0, 75, 229, 0.3);
 }
 .fold-card.danger-card.is-open { border-color: var(--danger-red); }
 
 .fold-card.is-open .card-detail {
-  display: block; /* 활성화 시에만 텍스트 출력 */
+  display: block;
   opacity: 1;
-  margin-top: 18px; /* 펼쳐졌을 때 생기는 매끄러운 윗 여백 */
-  animation: fadeInSlow 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  margin-top: 14px;
+  animation: fadeInSlow 1.8s cubic-bezier(0.12, 0.9, 0.18, 1) forwards;
 }
 
 @keyframes fadeInSlow {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0; 
+    transform: translateY(-8px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
 
 /* Part 05 약속 */
-.promise-inner { background: var(--accent-dark); color: #fff; padding: 56px 28px; border-radius: 32px; text-align: center; }
-.promise-inner h2 { font-size: 26px; margin: 16px 0 20px; font-weight: 900; color: #fff; line-height: 1.4; }
-.promise-inner p { color: #c4cae0; margin-bottom: 36px; font-size: 15.5px; line-height: 1.7; }
-.button.primary { display: block; width: 100%; padding: 20px 0; background: #ffffff; color: #000; font-size: 16.5px; font-weight: 800; border-radius: 18px; text-align: center; }
+.promise-inner { background: var(--accent-dark); color: #fff; padding: 52px 24px; border-radius: 28px; text-align: center; }
+.promise-inner h2 { font-size: 25px; margin: 14px 0 18px; font-weight: 900; color: #fff; line-height: 1.4; }
+.promise-inner p { color: #c4cae0; margin-bottom: 32px; font-size: 15px; line-height: 1.7; }
+.button.primary { display: block; width: 100%; padding: 18px 0; background: #ffffff; color: #000; font-size: 16px; font-weight: 800; border-radius: 16px; text-align: center; }
 
 /* 푸터 */
 .footer-wrapper { padding: 0 20px 60px; }
-.footer { padding-top: 32px; border-top: 1px solid rgba(10, 12, 16, 0.12); font-size: 13.5px; color: var(--ink-sub); line-height: 1.7; }
+.footer { padding-top: 28px; border-top: 1px solid rgba(10, 12, 16, 0.12); font-size: 13.5px; color: var(--ink-sub); line-height: 1.7; }
 .footer p { margin: 8px 0 0; }
